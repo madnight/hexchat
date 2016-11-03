@@ -980,14 +980,17 @@ void insert_text_of_textview(void *text_view, char *text, gint len, gint *positi
 }
 
 gint get_cursor_of_textview(void *text_view) {
-
-	//gtk_editable_insert_text
+	GtkTextIter iter;
 	GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
-//	return buffer->cursor-position;
-
-	return 1;
+	gtk_text_buffer_get_end_iter (buffer, &iter);
+	return gtk_text_iter_get_offset(&iter);
 }
-
+void set_cursor_of_textview(void *text_view, gint pos) {
+	GtkTextIter iter;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
+	gtk_text_buffer_get_end_iter (buffer, &iter);
+	gtk_text_iter_set_offset (&iter, pos);
+}
 char *
 fe_get_inputbox_contents (session *sess)
 {

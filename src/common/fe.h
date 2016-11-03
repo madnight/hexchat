@@ -57,6 +57,7 @@ void clear_text_of_textview(void *text_view);
 void set_text_of_textview(void *text_view, char *text);
 void insert_text_of_textview(void *text_view, char *text, gint len, gint *position);
 gint get_cursor_of_textview(void *text_view);
+void set_cursor_of_textview(void *text_view, gint pos);
 void fe_new_window (struct session *sess, int focus);
 void fe_new_server (struct server *serv);
 void fe_add_rawlog (struct server *serv, char *text, int len, int outbound);
