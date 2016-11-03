@@ -2995,8 +2995,6 @@ mg_create_entry (session *sess, GtkWidget *box)
 	gtk_entry_set_max_length (GTK_ENTRY (gui->input_box), 0);
 	g_signal_connect (G_OBJECT (entry), "activate",
 							G_CALLBACK (mg_inputbox_cb), gui);
-	g_signal_connect (G_OBJECT (entry), "select-all",
-							G_CALLBACK (mg_inputbox_cb), NULL);
 	g_signal_connect(G_OBJECT (entry), "key_press_event", G_CALLBACK(on_key_press), NULL);
 	gtk_container_add (GTK_CONTAINER (hbox), entry);
 

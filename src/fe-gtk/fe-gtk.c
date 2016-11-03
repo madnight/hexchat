@@ -965,6 +965,29 @@ void clear_text_of_textview(void *text_view) {
 	gtk_text_buffer_delete(buffer, &start, &end);
 }
 
+void set_text_of_textview(void *text_view, char *text) {
+	GtkTextIter iter;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
+	gtk_text_buffer_get_iter_at_offset(buffer, &iter, 0);
+	gtk_text_buffer_insert(buffer, &iter, text, -1);
+}
+
+void insert_text_of_textview(void *text_view, char *text, gint len, gint *position) {
+	GtkTextIter iter;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
+	gtk_text_buffer_get_iter_at_offset(buffer, &iter, position);
+	gtk_text_buffer_insert (buffer, &iter, text, len); //len
+}
+
+gint get_cursor_of_textview(void *text_view) {
+
+	//gtk_editable_insert_text
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
+//	return buffer->cursor-position;
+
+	return 1;
+}
+
 char *
 fe_get_inputbox_contents (session *sess)
 {
