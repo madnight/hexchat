@@ -949,6 +949,22 @@ fe_gui_info_ptr (session *sess, int info_type)
 	return NULL;
 }
 
+char *get_text_of_textview(void *text_view) {
+    GtkTextIter start, end;
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
+    gchar *text;
+    gtk_text_buffer_get_bounds(buffer, &start, &end);
+    text = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
+    return text;
+}
+
+void clear_text_of_textview(void *text_view) {
+    GtkTextIter start, end;
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer((GtkTextView *)text_view);
+    gtk_text_buffer_get_bounds(buffer, &start, &end);
+	gtk_text_buffer_delete(buffer, &start, &end);
+}
+
 char *
 fe_get_inputbox_contents (session *sess)
 {

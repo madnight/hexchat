@@ -297,6 +297,22 @@ mg_inputbox_focus (GtkWidget *widget, GdkEventFocus *event, session_gui *gui)
 	return FALSE;
 }
 
+gboolean on_key_press (GtkWidget * widget, GdkEventKey* pKey,gpointer userdata){
+		char *cmd;
+if (pKey->type == GDK_KEY_PRESS){
+switch (pKey->keyval)
+{
+case GDK_Return :
+		cmd = SPELL_ENTRY_GET_TEXT (widget);
+		SPELL_ENTRY_CLEAR_TEXT (widget);
+		//SPELL_ENTRY_SET_TEXT (widget, "");
+		handle_multiline (current_tab, cmd, TRUE, FALSE);
+		return TRUE;
+}
+}
+	return FALSE;
+}
+
 void
 mg_inputbox_cb (GtkWidget *igad, session_gui *gui)
 {
@@ -320,7 +336,7 @@ mg_inputbox_cb (GtkWidget *igad, session_gui *gui)
 	ignore = FALSE;
 
 	/* where did this event come from? */
-	if (gui->is_tab)
+	if (gui == 0x1 || gui->is_tab)
 	{
 		sess = current_tab;
 	} else
@@ -2971,9 +2987,17 @@ mg_create_entry (session *sess, GtkWidget *box)
 	sexy_spell_entry_set_checked ((SexySpellEntry *)entry, prefs.hex_gui_input_spell);
 	sexy_spell_entry_set_parse_attributes ((SexySpellEntry *)entry, prefs.hex_gui_input_attr);
 
+	// entry = sexy_spell_entry_new ();
+	gui->input_box = entry = gtk_text_view_new ();
+	// sexy_spell_entry_set_checked ((SexySpellEntry *)entry, prefs.hex_gui_input_spell);
+	// sexy_spell_entry_set_parse_attributes ((SexySpellEntry *)entry, prefs.hex_gui_input_attr);
+	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW (entry), GTK_WRAP_WORD_CHAR);
 	gtk_entry_set_max_length (GTK_ENTRY (gui->input_box), 0);
 	g_signal_connect (G_OBJECT (entry), "activate",
 							G_CALLBACK (mg_inputbox_cb), gui);
+	g_signal_connect (G_OBJECT (entry), "select-all",
+							G_CALLBACK (mg_inputbox_cb), NULL);
+	g_signal_connect(G_OBJECT (entry), "key_press_event", G_CALLBACK(on_key_press), NULL);
 	gtk_container_add (GTK_CONTAINER (hbox), entry);
 
 	gtk_widget_set_name (entry, "hexchat-inputbox");

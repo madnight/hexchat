@@ -181,9 +181,10 @@ typedef struct session_gui
 extern GdkPixmap *channelwin_pix;
 extern GdkPixmap *dialogwin_pix;
 
-#define SPELL_ENTRY_GET_TEXT(e) ((char *)(gtk_entry_get_text (GTK_ENTRY(e))))
+#define SPELL_ENTRY_GET_TEXT(e) ((char *)(get_text_of_textview (e)))
+#define SPELL_ENTRY_CLEAR_TEXT(e) clear_text_of_textview(e)
 #define SPELL_ENTRY_SET_TEXT(e,txt) gtk_entry_set_text(GTK_ENTRY(e),txt)
-#define SPELL_ENTRY_SET_EDITABLE(e,v) gtk_editable_set_editable(GTK_EDITABLE(e),v)
+#define SPELL_ENTRY_SET_EDITABLE(e,v) gtk_text_view_set_editable(GTK_EDITABLE(e),v)
 #define SPELL_ENTRY_GET_POS(e) gtk_editable_get_position(GTK_EDITABLE(e))
 #define SPELL_ENTRY_SET_POS(e,p) gtk_editable_set_position(GTK_EDITABLE(e),p);
 #define SPELL_ENTRY_INSERT(e,t,l,p) gtk_editable_insert_text(GTK_EDITABLE(e),t,l,p)
